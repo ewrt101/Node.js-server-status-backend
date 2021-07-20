@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+var cors = require('cors')
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -10,6 +11,8 @@ var commandRouter = require('./routes/command');
 
 var app = express();
 
+app.use(cors())
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -19,9 +22,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+
 app.use('/', indexRouter);
 app.use('/system', systemRouter);
 app.use('/command', commandRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
